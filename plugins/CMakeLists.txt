@@ -1,1 +1,9 @@
-INSTALL (FILES perfmetrics.py DESTINATION ${PYTHON_INSTALL_DIR}/dnf-plugins)
+ADD_LIBRARY (perfmetrics MODULE perfmetrics.cpp)
+
+# Produce perfmetrics.so rather than libperfmetrics.so.
+SET_TARGET_PROPERTIES (perfmetrics PROPERTIES PREFIX "")
+
+TARGET_INCLUDE_DIRECTORIES (perfmetrics PRIVATE ${LIBDNF5_INCLUDE_DIRS} ${JSONC_INCLUDE_DIRS})
+TARGET_LINK_LIBRARIES (perfmetrics PRIVATE ${LIBDNF5_LIBRARIES} ${JSONC_LIBRARIES})
+
+INSTALL (TARGETS perfmetrics LIBRARY DESTINATION ${CMAKE_INSTALL_FULL_LIBDIR}/libdnf5/plugins/)
